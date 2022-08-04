@@ -8,6 +8,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
+import { CreateBookDto } from './dto/create-book.dto';
+import { UpdateBookDto } from './dto/update-book.dto';
 
 @Controller('books')
 export class BooksController {
@@ -27,22 +29,13 @@ export class BooksController {
     return this.bookServices.getBookById(id);
   }
   @Post('/')
-  createBooks(
-    @Body('title') title: string,
-    @Body('author') author: string,
-    @Body('category') category: string,
-  ) {
-    return this.bookServices.createBooks(title, author, category);
+  createBooks(@Body() payload: CreateBookDto) {
+    return this.bookServices.createBooks(payload);
   }
 
   @Put('/:id')
-  updateBooks(
-    @Param('id') id: string,
-    @Body('title') title: string,
-    @Body('author') author: string,
-    @Body('category') category: string,
-  ) {
-    return this.bookServices.updateBooks(id, title, author, category);
+  updateBooks(@Param('id') id: string, @Body() payload: UpdateBookDto) {
+    return this.bookServices.updateBooks(id, payload);
   }
 
   @Delete('/:id')
